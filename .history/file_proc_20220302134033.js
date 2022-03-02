@@ -4,8 +4,6 @@
 
 // global variables.
 var resultTsvString;
-var ident = [];
-var traits = [];
 var $identityFile = document.getElementById('inputGroupFile01_btn');
 var $traitFile = document.getElementById('inputGroupFile02_btn');
 var $submitButton = document.getElementById('submit_btn');
@@ -48,13 +46,11 @@ async function load_trait(ev)
     // get file contents.
     const text = await fetchAsText(file);
     const df = tsv_to_array(text,'\t',true);
-    traits = [];
+    let traits = [];
     df.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
-    if(traits.length && ident.length){
-      $submitButton.disabled = false;
-    }
+
     return Promise.resolve(traits);
 }
 
@@ -68,7 +64,7 @@ async function load_identical()
     const text = await fetchAsText(file);
     // scan lines. skip first column.
     let df = tsv_to_array(text,'\t',true);  
-    ident = [];
+    let ident = [];
     let strains =[];
     let cur_id;
     for (let i in df){
@@ -86,8 +82,8 @@ async function load_identical()
     }
     // push last element.
     ident.push({node:cur_id, strains:strains});
-    if(ident.length && traits.length){
-      $submitButton.disabled = false;
+    if(traits){
+      $downloadButton.disabled = false;
     }
     return Promise.resolve(ident);
 }
@@ -162,13 +158,13 @@ async function main_proc(ident, traits)
 async function process_files()
 {
     // 基本的に例外処理はルーチン内で実施。
-    //let ident = await load_identical();
-    //let traits = await load_trait();
+    let ident = await load_identical();
+    let traits = await load_trait();
     if(ident && traits){
         var result = await main_proc(ident, traits);
     }
 
-    //console.log(result); // <DEBUG>
+    console.log(result); // <DEBUG>
     if(result){
         resultTsvString = reform_output(result);
     }
@@ -180,8 +176,7 @@ async function process_files()
 function reform_output(result)
 {
     var outTxt = '';
-    let traitList = Object.keys(result[0]).slice(1);
-    console.log(traitList); // <DEBUG>    
+    let traitList = ["KE", "CB", "KW", "HO", "REF"];
     let countList = result;
     outTxt += '\t' + traitList.join('\t') + '\n';
     for(let i=0; i< countList.length; i++){

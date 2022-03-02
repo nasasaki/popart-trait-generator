@@ -180,7 +180,7 @@ async function process_files()
 function reform_output(result)
 {
     var outTxt = '';
-    let traitList = Object.keys(result[0]).slice(1);
+    let traitList = Object.keys(result).slice(1);
     console.log(traitList); // <DEBUG>    
     let countList = result;
     outTxt += '\t' + traitList.join('\t') + '\n';

@@ -52,7 +52,7 @@ async function load_trait(ev)
     df.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
-    if(traits.length && ident.length){
+    if(traits && ident){
       $submitButton.disabled = false;
     }
     return Promise.resolve(traits);
@@ -86,7 +86,7 @@ async function load_identical()
     }
     // push last element.
     ident.push({node:cur_id, strains:strains});
-    if(ident.length && traits.length){
+    if(ident && traits){
       $submitButton.disabled = false;
     }
     return Promise.resolve(ident);
@@ -168,7 +168,7 @@ async function process_files()
         var result = await main_proc(ident, traits);
     }
 
-    //console.log(result); // <DEBUG>
+    console.log(result); // <DEBUG>
     if(result){
         resultTsvString = reform_output(result);
     }
@@ -180,8 +180,7 @@ async function process_files()
 function reform_output(result)
 {
     var outTxt = '';
-    let traitList = Object.keys(result[0]).slice(1);
-    console.log(traitList); // <DEBUG>    
+    let traitList = ["KE", "CB", "KW", "HO", "REF"];
     let countList = result;
     outTxt += '\t' + traitList.join('\t') + '\n';
     for(let i=0; i< countList.length; i++){
