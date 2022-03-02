@@ -68,7 +68,7 @@ async function load_identical()
     // get file contents.
     const text = await fetchAsText(file);
     // scan lines. skip first column.
-    let df = tsv_to_array(text.replace(/\r/g,''),'\t',true);  
+    let df = tsv_to_array(texttext.replace(/\r/g,''),'\t',true);  
     ident = [];
     let strains =[];
     let cur_id;
@@ -177,7 +177,7 @@ async function process_files()
 }
 function reform_output(result)
 {
-    var outTxt ='';
+    var outTxt;
     let traitList = Object.keys(result[0]).slice(1);
     //console.log(traitList); // <DEBUG>    
     let countList = result;

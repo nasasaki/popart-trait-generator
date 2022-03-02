@@ -177,7 +177,7 @@ async function process_files()
 }
 function reform_output(result)
 {
-    var outTxt ='';
+    var outTxt;
     let traitList = Object.keys(result[0]).slice(1);
     //console.log(traitList); // <DEBUG>    
     let countList = result;
