@@ -5,6 +5,7 @@
     /* Set the fixed height of the footer here */
     height: 60px;
     background-color: #f5f5f5;
+<<<<<<< HEAD
 }
 body > .container {
     padding: 30px 15px 30px 30px;
@@ -16,4 +17,18 @@ body > .container {
 .footer > .container {
     padding-right: 15px;
     padding-left: 15px;
+=======
+    }
+    body > .container {
+    padding: 60px 15px 0;
+    }
+    .container .text-muted {
+    margin: 20px 0;
+    }
+     
+    .footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+    }
+>>>>>>> d37216a3fe33cf48dfd3b8c0098a79240a8e70dd
 }
