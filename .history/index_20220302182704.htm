@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./styles.css">
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.2/underscore-umd-min.js"></script>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-light bg-light">
@@ -42,7 +42,7 @@
           <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupFile01">入力ファイル1</label>
             <input class="form-control" type="file" placeholder="Put Identities File..." id="inputGroupFile01_file">
-            <button class="btn btn-primary" type="button" id="inputGroupFile01_btn" disabled>Upload</button>
+            <button class="btn btn-custom" type="button" id="inputGroupFile01_btn" disabled>Upload</button>
           </div>
           <dl class="row">
             <dt>入力ファイル2:ユーザーが定義したLocation/Traitのメタ情報ファイル(Tab区切り)。</dt><dd><!--<a href="">(例)書式例</a>-->
@@ -57,7 +57,7 @@
             実行ボタン押下後、処理が完了すると、最下部の「Download」ボタンが有効化されます。</p>
           <div class="d-grid gap-2 col-6 mx-auto">
             
-            <button class="btn btn-custom" type="button" id="submit_btn" disabled>実行</button>
+            <button class="btn btn-primary" type="button" id="submit_btn" disabled>実行</button>
           </div>
         </form>
         <!--<p>progress barが欲しい…</p>-->
@@ -67,7 +67,7 @@
           <dt>出力ファイル:</dt><dd>PopART "Import Traits..."用の入力ファイル</dd>
         </dl>  
         <p>結果ファイルのダウンロードはこちらから</p>
-        <button class="btn btn-custom" id="download_btn" disabled><i class="fa fa-download"></i> Download</button>
+        <button class="btn btn-primary" id="download_btn" disabled><i class="fa fa-download"></i> Download</button>
       </div>
     </div>
     <script src="./file_proc.js"></script>

@@ -1,10 +1,8 @@
-.btn-custom {
-    background-color: #366ef4;
-    color:  #f5f5f5;
-}
 .btn-custom:disabled {
-    background-color: #a1a5aa;
-    color:  #0a0a0a;
+    background-color: #A1A5AA;
+}
+.btn-custom {
+    background-color: aqua;
 }
 .footer {
     bottom: 0;
