@@ -7,10 +7,9 @@ var resultTsvString;
 var ident = [];
 var traits = [];
 var OutputFilename = 'trait-result.tsv';
-var $identityFile = document.getElementById('inputGroupFile01_file');
+var $identityFile = document.getElementById('inputGroupFile01_btn');
 var $identityFileButton = document.getElementById('inputGroupFile01_btn');
-var $traitFile = document.getElementById('inputGroupFile02_file');
-var $traitFileButton = document.getElementById('inputGroupFile02_btn');
+var $traitFile = document.getElementById('inputGroupFile02_btn');
 var $submitButton = document.getElementById('submit_btn');
 var $downloadButton = document.getElementById('download_btn');
 
@@ -18,14 +17,8 @@ var $downloadButton = document.getElementById('download_btn');
 
 // register event listener.
 window.addEventListener('load', () => {
-    $identityFile.addEventListener('change', () => {
-      $identityFileButton.disabled = false;
-    });
-    $traitFile.addEventListener('change', () => {
-      $traitFileButton.disabled = false;
-    });
-    $identityFileButton.addEventListener('click', load_identical);
-    $traitFileButton.addEventListener('click', load_trait);
+    $identityFile.addEventListener('click', load_identical);
+    $traitFile.addEventListener('click', load_trait);
     $submitButton.addEventListener('click', process_files);
     $downloadButton.addEventListener('click', download_tsv);
 });
@@ -62,7 +55,6 @@ async function load_trait(ev)
         traits.push({strain: v[0], trait: v[1]});
     });
     if(traits.length && ident.length){
-      $traitFileButton.disabled = false;
       $submitButton.disabled = false;
     }
     return Promise.resolve(traits);
@@ -97,7 +89,6 @@ async function load_identical()
     // push last element.
     ident.push({node:cur_id, strains:strains});
     if(ident.length && traits.length){
-      $identityFileButton.disabled = false;
       $submitButton.disabled = false;
     }
     return Promise.resolve(ident);

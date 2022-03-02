@@ -62,7 +62,6 @@ async function load_trait(ev)
         traits.push({strain: v[0], trait: v[1]});
     });
     if(traits.length && ident.length){
-      $traitFileButton.disabled = false;
       $submitButton.disabled = false;
     }
     return Promise.resolve(traits);
@@ -97,7 +96,6 @@ async function load_identical()
     // push last element.
     ident.push({node:cur_id, strains:strains});
     if(ident.length && traits.length){
-      $identityFileButton.disabled = false;
       $submitButton.disabled = false;
     }
     return Promise.resolve(ident);
