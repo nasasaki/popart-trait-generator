@@ -16,7 +16,8 @@ var $submitButton = document.getElementById('submit_btn');
 var $downloadButton = document.getElementById('download_btn');
 var $toastLoadSuccess = document.getElementById('loadSuccess');
 var $toastLoadFailed = document.getElementById('loadFailed');
-var $toastProcSuccess = document.getElementById('procSuccess');
+
+
 
 // register event listener.
 window.addEventListener('load', () => {
@@ -64,9 +65,8 @@ async function load_trait(ev)
     // get file contents.
     const text = await fetchAsText(file);
     const df = tsv_to_array(text.replace(/\r/g,''),'\t',true);
-    var cleaned = [];
-    traits = [];
-    cleaned = df.filter( e => { return e.length > 1 });
+    cleaned = [];
+    var cleaned = df.filter( e => { return e.length > 1 });
     cleaned.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
@@ -212,8 +212,6 @@ async function process_files()
     }
     if(resultTsvString){
         $downloadButton.disabled = false;
-        let toast = new bootstrap.Toast($toastProcSuccess);
-        toast.show();
         //window.sessionStorage.setItem <- onsubmitの場合はsession変数にする必要がある。
     }
 }
