@@ -77,7 +77,7 @@ async function load_identical()
     // get file contents.
     const text = await fetchAsText(file);
     // scan lines. skip first column.
-    let df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);  
+    let df = tsv_to_array(text.replace(/\r/g,''),'\t',true);  
     ident = [];
     let strains =[];
     let cur_id;

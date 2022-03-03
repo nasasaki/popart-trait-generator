@@ -56,7 +56,7 @@ async function load_trait(ev)
     if(!file) return; // Notifitaion required.
     // get file contents.
     const text = await fetchAsText(file);
-    const df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);
+    const df = tsv_to_array(text.replace(r/\r/g,''),'\t',true);
     traits = [];
     df.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
@@ -77,7 +77,7 @@ async function load_identical()
     // get file contents.
     const text = await fetchAsText(file);
     // scan lines. skip first column.
-    let df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);  
+    let df = tsv_to_array(text.replace(/\r/g,''),'\t',true);  
     ident = [];
     let strains =[];
     let cur_id;
