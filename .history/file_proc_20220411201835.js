@@ -16,7 +16,8 @@ var $submitButton = document.getElementById('submit_btn');
 var $downloadButton = document.getElementById('download_btn');
 var $toastLoadSuccess = document.getElementById('loadSuccess');
 var $toastLoadFailed = document.getElementById('loadFailed');
-var $toastProcSuccess = document.getElementById('procSuccess');
+
+
 
 // register event listener.
 window.addEventListener('load', () => {
@@ -53,20 +54,14 @@ var fetchAsText = (file) => {
 async function load_trait(ev)
 {
     // load file.
-    allTraits = new Set(); 
     const fname = document.getElementById('inputGroupFile02_file')
     const file = fname.files[0];
-    if(!file){
-      let toast = new bootstrap.Toast($toastLoadFailed);
-      toast.show();
-       return;
-    }
+    if(!file) return; // Notifitaion required.
     // get file contents.
     const text = await fetchAsText(file);
     const df = tsv_to_array(text.replace(/\r/g,''),'\t',true);
-    var cleaned = [];
+    var cleaned = df.filter( e => { return e.length > 1 });
     traits = [];
-    cleaned = df.filter( e => { return e.length > 1 });
     cleaned.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
@@ -75,8 +70,6 @@ async function load_trait(ev)
       $submitButton.disabled = false;
     }
     //console.log(traits) // <DEBUG>
-    let toast = new bootstrap.Toast($toastLoadSuccess);
-    toast.show();
     return Promise.resolve(traits);
 }
 
@@ -212,8 +205,6 @@ async function process_files()
     }
     if(resultTsvString){
         $downloadButton.disabled = false;
-        let toast = new bootstrap.Toast($toastProcSuccess);
-        toast.show();
         //window.sessionStorage.setItem <- onsubmitの場合はsession変数にする必要がある。
     }
 }
@@ -222,7 +213,7 @@ function reform_output(result)
     var outTxt ='';
     const traitList = Array.from(allTraits);
     //let traitList = Object.keys(result[0]).slice(1);
-    //console.log(traitList); // <DEBUG>    
+    console.log(traitList); // <DEBUG>    
     let countList = result;
     outTxt += '\t' + traitList.join('\t') + '\n';
     //console.log(outTxt); // <DEBUG>

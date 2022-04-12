@@ -64,9 +64,8 @@ async function load_trait(ev)
     // get file contents.
     const text = await fetchAsText(file);
     const df = tsv_to_array(text.replace(/\r/g,''),'\t',true);
-    var cleaned = [];
-    traits = [];
-    cleaned = df.filter( e => { return e.length > 1 });
+    cleaned = [];
+    var cleaned = df.filter( e => { return e.length > 1 });
     cleaned.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
