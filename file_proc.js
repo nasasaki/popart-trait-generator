@@ -98,8 +98,8 @@ async function load_identical()
       if(dummy){
         iserr = true; // flag toggled.
       };
-      if(i==0){ cur_id = node; }  
-      if(node){
+      //if(i==0){ cur_id = node; }  
+      if(node){ // if heading node label exists (after second occurance)
         if(cur_id){
           ident.push({node:cur_id, strains:strains});
           strains =[];
@@ -111,7 +111,7 @@ async function load_identical()
       }
     }
     // push last element.
-    //ident.push({node:cur_id, strains:strains});
+    ident.push({node:cur_id, strains:strains});
     if(!iserr){
  
       let toast = new bootstrap.Toast($toastLoadSuccess);
