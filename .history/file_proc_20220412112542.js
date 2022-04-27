@@ -63,9 +63,9 @@ async function load_trait(ev)
     }
     // get file contents.
     const text = await fetchAsText(file);
-    const df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);
-    traits = [];
-    cleaned = df.filter( e => { return e.length > 1 });
+    const df = tsv_to_array(text.replace(/\r/g,''),'\t',true);
+    cleaned = [];
+    var cleaned = df.filter( e => { return e.length > 1 });
     cleaned.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
@@ -88,8 +88,8 @@ async function load_identical()
     // get file contents.
     const text = await fetchAsText(file);
     // scan lines. skip first column.
-    let df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);
-    ident = [];  
+    let df = tsv_to_array(text.replace(/\r/g,''),'\t',true);  
+    ident = [];
     let strains =[];
     let cur_id;
     let iserr = false;
@@ -97,8 +97,7 @@ async function load_identical()
       let [node, strain, dummy] = df[i];
       if(dummy){
         iserr = true; // flag toggled.
-      };
-      if(i==0){ cur_id = node; }  
+      };  
       if(node){
         if(cur_id){
           ident.push({node:cur_id, strains:strains});
@@ -113,11 +112,9 @@ async function load_identical()
     // push last element.
     //ident.push({node:cur_id, strains:strains});
     if(!iserr){
- 
       let toast = new bootstrap.Toast($toastLoadSuccess);
       toast.show();
-      if(traits.length && ident.length){
-        $identityFileButton.disabled = false;
+      if(traits.length){
         $submitButton.disabled = false;
       }
     }else{
@@ -214,7 +211,7 @@ async function process_files()
     }
     if(resultTsvString){
         $downloadButton.disabled = false;
-        let toast = new bootstrap.Toast($toastProcSuccess);
+        let toast = new bootstrap.Toast($toastLoadSuccess);
         toast.show();
         //window.sessionStorage.setItem <- onsubmitの場合はsession変数にする必要がある。
     }

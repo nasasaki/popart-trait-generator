@@ -4,7 +4,6 @@
 
 // global variables.
 var resultTsvString;
-var allTraits = new Set();  // uniq set of existing traits
 var ident = [];
 var traits = [];
 var OutputFilename = 'trait-result.tsv';
@@ -16,7 +15,8 @@ var $submitButton = document.getElementById('submit_btn');
 var $downloadButton = document.getElementById('download_btn');
 var $toastLoadSuccess = document.getElementById('loadSuccess');
 var $toastLoadFailed = document.getElementById('loadFailed');
-var $toastProcSuccess = document.getElementById('procSuccess');
+
+
 
 // register event listener.
 window.addEventListener('load', () => {
@@ -53,29 +53,21 @@ var fetchAsText = (file) => {
 async function load_trait(ev)
 {
     // load file.
-    allTraits = new Set(); 
     const fname = document.getElementById('inputGroupFile02_file')
     const file = fname.files[0];
-    if(!file){
-      let toast = new bootstrap.Toast($toastLoadFailed);
-      toast.show();
-       return;
-    }
+    if(!file) return; // Notifitaion required.
     // get file contents.
     const text = await fetchAsText(file);
-    const df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);
+    const df = tsv_to_array(text.replace(/\r/g,''),'\t',true);
     traits = [];
-    cleaned = df.filter( e => { return e.length > 1 });
-    cleaned.map((v) =>{
+    df.map((v) =>{
         traits.push({strain: v[0], trait: v[1]});
     });
     if(traits.length && ident.length){
       $traitFileButton.disabled = false;
       $submitButton.disabled = false;
     }
-    //console.log(traits) // <DEBUG>
-    let toast = new bootstrap.Toast($toastLoadSuccess);
-    toast.show();
+    console.log(traits) // DEBUG
     return Promise.resolve(traits);
 }
 
@@ -88,8 +80,8 @@ async function load_identical()
     // get file contents.
     const text = await fetchAsText(file);
     // scan lines. skip first column.
-    let df = tsv_to_array(text.replaceAll(/\r/g,''),'\t',true);
-    ident = [];  
+    let df = tsv_to_array(text.replace(/\r/g,''),'\t',true);  
+    ident = [];
     let strains =[];
     let cur_id;
     let iserr = false;
@@ -97,8 +89,7 @@ async function load_identical()
       let [node, strain, dummy] = df[i];
       if(dummy){
         iserr = true; // flag toggled.
-      };
-      if(i==0){ cur_id = node; }  
+      };  
       if(node){
         if(cur_id){
           ident.push({node:cur_id, strains:strains});
@@ -111,13 +102,11 @@ async function load_identical()
       }
     }
     // push last element.
-    //ident.push({node:cur_id, strains:strains});
+    ident.push({node:cur_id, strains:strains});
     if(!iserr){
- 
       let toast = new bootstrap.Toast($toastLoadSuccess);
       toast.show();
-      if(traits.length && ident.length){
-        $identityFileButton.disabled = false;
+      if(traits.length){
         $submitButton.disabled = false;
       }
     }else{
@@ -133,8 +122,9 @@ async function main_proc(ident, traits)
     var traitCounts = {};       // key: node, value: hash counter
     var strain2node = {};       // key: strain, value: node
     var strain2trait = {};      // key: strain, value: trait
-    var allNodes = new Set();   // uniq set of existing nodes
 
+    var allNodes = new Set();   // uniq set of existing nodes
+    var allTraits = new Set();  // uniq set of existing traits
     var allStrains = new Set(); // uniq set of existing strains
 
     var result = []; // result array
@@ -143,27 +133,20 @@ async function main_proc(ident, traits)
     for (let i=0; i< ident.length; i++){
       let strains = ident[i].strains;
       let node = ident[i].node;
-      if (!(allNodes.has(node))){
-        allNodes.add(node);
-      }
+      allNodes.add(node);
       for(let ii=0; ii < strains.length; ii++){
         let strain = strains[ii];
         strain2node[strain] = node
       }
     }
-    
 
     // scan trait data
     for (let i=0; i< traits.length; i++){
       let strain = traits[i].strain;
       let trait = traits[i].trait;
       strain2trait[strain] = trait;
-      if(!allTraits.has(trait)){
-        allTraits.add(trait);
-      }
-      if(!allStrains.has(strain)){
-        allStrains.add(strain);
-      }
+      allTraits.add(trait);
+      allStrains.add(strain)
     }
 
     // initialize traitCounts with 0
@@ -177,7 +160,7 @@ async function main_proc(ident, traits)
     // counting
     for(let strain of allStrains){
       let node = strain2node[strain];
-      if (!node){
+      if (node == undefined){
         node = strain;
         allNodes.add(node);
         traitCounts[node] = {};
@@ -196,9 +179,9 @@ async function main_proc(ident, traits)
       for (let trait of allTraits){
         tmp[trait] = traitCounts[node][trait]
       }
+      //console.log(tmp); // <DEBUG>  
       result.push(tmp);
     }
-
     return Promise.resolve(result);
 }
 
@@ -214,17 +197,14 @@ async function process_files()
     }
     if(resultTsvString){
         $downloadButton.disabled = false;
-        let toast = new bootstrap.Toast($toastProcSuccess);
-        toast.show();
         //window.sessionStorage.setItem <- onsubmitの場合はsession変数にする必要がある。
     }
 }
 function reform_output(result)
 {
     var outTxt ='';
-    const traitList = Array.from(allTraits);
-    //let traitList = Object.keys(result[0]).slice(1);
-    //console.log(traitList); // <DEBUG>    
+    let traitList = Object.keys(result[0]).slice(1);
+    console.log(traitList); // <DEBUG>    
     let countList = result;
     outTxt += '\t' + traitList.join('\t') + '\n';
     //console.log(outTxt); // <DEBUG>

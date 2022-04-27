@@ -20,7 +20,7 @@
         <h1>PopART Trait File Generator</h1>
         <div class="mb-2">
           <span class="text-muted fload-end" >
-            <small>version 1.0.3</small>
+            <small>version 0.3.0</small>
           </span>
         </div>
         <div class="mb-3 container-fluid float-center">
@@ -37,7 +37,7 @@
         <form autocomplete="off" id="rhsForm">
           <dl class="row">
             <dt>入力ファイル1:PopART のIdentical Sequences...からの出力ファイル。</dt><dd>
-            「ファイルを選択」のボタンから使用するファイルを選択し、右端の「読込」を押します。</dd>
+            「ファイルを選択」のボタンから使用するファイルを選択し、左端の「読込」を押します。</dd>
           </dl> 
           <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupFile01">入力ファイル1</label>
@@ -72,41 +72,39 @@
       </div>
     </div>
     <!--Toast catalog-->
-    <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-      <div class="position-fixed bottom-0 end-0 p-3">
-        <div id="loadSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header bg-success text-white bg-opacity-75">
-            <strong class="me-auto">popart-trait-generator</strong>
-            <span><small>now</small></span><span class="mx-1"><b>&times;</b></span>
-          </div>
-          <div class="toast-body">
-            <i class="fa fa-check" style="color: #198754;"></i>正常に読み込まれました。
-          </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="loadSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white bg-opacity-75">
+          <strong class="me-auto">popart-trait-generator</strong>
+          <small>now</small>
+        </div>
+        <div class="toast-body">
+          <i class="fa fa-check" style="color: #198754;"></i>正常に読み込まれました。
         </div>
       </div>
-      <div class="position-fixed bottom-0 end-0 p-3">
-        <div id="loadFailed" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header bg-danger text-white bg-opacity-75">
-            <strong class="me-auto">popart-trait-generator</strong>
-            <span><small>now</small></span>><span class="mx-1"><b>&times;</b></span>
-          </div>
-          <div class="toast-body">
-            <i class="fa fa-times" style="color: #dc3545;"></i>読み込みに失敗しました。
-          </div>
-        </div>
-      </div>
-      <div class="position-fixed bottom-0 end-0 p-3">
-        <div id="procSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header bg-success text-white bg-opacity-75">
-            <strong class="me-auto">popart-trait-generator</strong>
-          <span><small>now</small></span><span class="mx-1"><b>&times;</b></span>
-          </div>
-          <div class="toast-body">
-            <i class="fa fa-check" style="color: #198754;"></i>ダウンロードの準備ができました。
-          </div>
-        </div>
     </div>
-  </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="loadFailed" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger text-white bg-opacity-75">
+          <strong class="me-auto">popart-trait-generator</strong>
+          <small>now</small>
+        </div>
+        <div class="toast-body">
+          <i class="fa fa-times" style="color: #dc3545;"></i>読み込みに失敗しました。
+        </div>
+      </div>
+    </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 10">
+      <div id="procSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white bg-opacity-75">
+          <strong class="me-auto">popart-trait-generator</strong>
+          <small>now</small>
+        </div>
+        <div class="toast-body">
+          <i class="fa fa-check" style="color: #198754;"></i>正常に変換されました。
+        </div>
+      </div>
+    </div>
     <div class="container-fluid">
       <footer class="footer">
         <p class="text-muted text-center">Copyright &copy; 2022 Pathogen genomic Center, NIID Toyama, JP</p>      
