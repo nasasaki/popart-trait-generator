@@ -1,4 +1,4 @@
-# popart-trait-generator
+# popart-traitfile-generator
 File generator to import traits/location information into the PopART tree
 that enables colored pie-chart for all nodes.
 
